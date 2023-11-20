@@ -155,30 +155,73 @@ public class JavaChallenges {
 //	findNb(1071225) --> 45
 //
 //	findNb(91716553919377) --> -1
-	
+
 	public static long findNb(long m) {
 		long sum = 0;
 		long n = 0;
 
 		while (sum < m) {
 			sum += Math.pow(++n, 3);
-			
+
 		}
 
 		return (sum == m) ? n : -1;
 
 	}
-	
+
 //	You might know some pretty large perfect squares. But what about the NEXT one?
 //
-//			Complete the findNextSquare method that finds the next integral perfect square after the one passed as a parameter. Recall that an integral perfect square is an integer n such that sqrt(n) is also an integer.
+//	Complete the findNextSquare method that finds the next integral perfect square after the one passed as a parameter. Recall that an integral perfect square is an integer n such that sqrt(n) is also an integer.
 //
-//			If the parameter is itself not a perfect square then -1 should be returned. You may assume the parameter is non-negative.
+//	If the parameter is itself not a perfect square then -1 should be returned. You may assume the parameter is non-negative.
 //
-//			Examples:(Input --> Output)
+//	Examples:(Input --> Output)
 //
-//			121 --> 144
-//			625 --> 676
-//			114 --> -1 since 114 is not a perfect square
+//	121 --> 144
+//	625 --> 676
+//	114 --> -1 since 114 is not a perfect square
+
+	public static long findNextSquare(long sq) {
+		long root = (long) Math.sqrt(sq);
+		return root * root == sq ? (root + 1) * (root + 1) : -1;
+	}
+
+	public static long findNextSquare2(long sq) {
+		return Math.sqrt(sq) % 1 != 0 ? -1 : (long) Math.pow(Math.sqrt(sq) + 1, 2);
+	}
+	
+//	Find the missing letter
+//	Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array.
+//
+//	You will always get an valid array. And it will be always exactly one letter be missing. The length of the array will always be at least 2.
+//	The array will always contain letters in only one case.
+//
+//	Example:
+//
+//	['a','b','c','d','f'] -> 'e'
+//	['O','Q','R','S'] -> 'P'
+//	(Use the English alphabet with 26 letters!)
+	
+	 public static char findMissingLetter(char[] array)
+	  {
+	    boolean stop = false;
+	    int i;
+	    for(i = 1; i < array.length && !stop; i++)
+	    {
+	      if (array[i] - array[i-1] != 1)
+	        stop = true;
+	    }
+	    return (char) (array[i-1]-1);
+	  }
+	
+	public static char findMissingLetter2(char[] array){
+	    char expectableLetter = array[0];
+	    for(char letter : array){
+	      if(letter != expectableLetter) break;
+	      expectableLetter++;
+	    }
+	    return expectableLetter;
+	  }
+
 
 }
