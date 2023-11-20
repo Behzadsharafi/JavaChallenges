@@ -5,19 +5,22 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-	public static long digPow(int n, int p) {
-		String intString = String.valueOf(n);
+	public static long findNb(long m) {
 		long sum = 0;
-		for (int i = 0; i < intString.length(); i++) {
-			sum += Math.pow(Character.getNumericValue(intString.charAt(i)), p + i);
+		long n = 0;
+
+		while (sum < m) {
+			sum += Math.pow(++n, 3);
+			
 		}
 
-		return (sum % n == 0) ? sum / n : -1;
+		return (sum == m) ? n : -1;
+
 	}
 
 	public static void main(String[] args) {
 
-		System.out.println(digPow(46288, 3));
+		System.out.println(findNb(91716553919377l));
 
 	}
 

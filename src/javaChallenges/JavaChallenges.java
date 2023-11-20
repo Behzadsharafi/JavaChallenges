@@ -145,6 +145,40 @@ public class JavaChallenges {
 		int sum = IntStream.range(0, digits.length).map(i -> (int) Math.pow(digits[i], i + p)).sum();
 		return sum % n == 0 ? sum / n : -1;
 	}
+
+//	Your task is to construct a building which will be a pile of n cubes. The cube at the bottom will have a volume of 
+//	n^3, the cube above will have volume of (n-1)^3 and so on until the top which will have a volume of (1)^3.
+//	You are given the total volume m of the building. Being given m can you find the number n of cubes you will have to build?
+//  The parameter of the function findNb (find_nb, find-nb, findNb, ...) will be an integer m and you
+//	have to return the integer n such as n^3 + (n-1)^3 + (n-2)^3 + .and..and + 1^3 = m  if such a n exists or -1 if there is no such n.
+//	Examples:
+//	findNb(1071225) --> 45
+//
+//	findNb(91716553919377) --> -1
+	
+	public static long findNb(long m) {
+		long sum = 0;
+		long n = 0;
+
+		while (sum < m) {
+			sum += Math.pow(++n, 3);
+			
+		}
+
+		return (sum == m) ? n : -1;
+
+	}
+	
+//	You might know some pretty large perfect squares. But what about the NEXT one?
+//
+//			Complete the findNextSquare method that finds the next integral perfect square after the one passed as a parameter. Recall that an integral perfect square is an integer n such that sqrt(n) is also an integer.
+//
+//			If the parameter is itself not a perfect square then -1 should be returned. You may assume the parameter is non-negative.
+//
+//			Examples:(Input --> Output)
+//
+//			121 --> 144
+//			625 --> 676
+//			114 --> -1 since 114 is not a perfect square
+
 }
-
-
