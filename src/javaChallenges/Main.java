@@ -1,25 +1,17 @@
 package javaChallenges;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class Main {
 
-	public static char findMissingLetter(char[] array) {
-		for (int i = 0; i < array.length - 1; i++) {
-			if (array[i + 1] - array[i] > 1) {
-				return (char) (array[i] + 1);
-			}
-		}
-		  throw new IllegalArgumentException("error");
+	public static int findIt(int[] arr) {
+		return Arrays.stream(arr).reduce(0, (x, y) -> x ^ y);
 	}
 
 	public static void main(String[] args) {
-		char[] example1 = { 'a', 'b', 'c', 'd', 'f' };
-	     char[] example2 = {'O', 'Q', 'R', 'S'};
-
-		System.out.println(findMissingLetter(example2));
-
+		// Example
+		int[] integerArray = { 1, 2, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 1 };
+		System.out.println(findIt(integerArray));
 	}
 
 }
