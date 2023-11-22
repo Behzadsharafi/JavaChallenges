@@ -189,7 +189,7 @@ public class JavaChallenges {
 	public static long findNextSquare2(long sq) {
 		return Math.sqrt(sq) % 1 != 0 ? -1 : (long) Math.pow(Math.sqrt(sq) + 1, 2);
 	}
-	
+
 //	Find the missing letter
 //	Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array.
 //
@@ -201,29 +201,27 @@ public class JavaChallenges {
 //	['a','b','c','d','f'] -> 'e'
 //	['O','Q','R','S'] -> 'P'
 //	(Use the English alphabet with 26 letters!)
-	
-	 public static char findMissingLetter(char[] array)
-	  {
-	    boolean stop = false;
-	    int i;
-	    for(i = 1; i < array.length && !stop; i++)
-	    {
-	      if (array[i] - array[i-1] != 1)
-	        stop = true;
-	    }
-	    return (char) (array[i-1]-1);
-	  }
-	
-	public static char findMissingLetter2(char[] array){
-	    char expectableLetter = array[0];
-	    for(char letter : array){
-	      if(letter != expectableLetter) break;
-	      expectableLetter++;
-	    }
-	    return expectableLetter;
-	  }
-	
-	
+
+	public static char findMissingLetter(char[] array) {
+		boolean stop = false;
+		int i;
+		for (i = 1; i < array.length && !stop; i++) {
+			if (array[i] - array[i - 1] != 1)
+				stop = true;
+		}
+		return (char) (array[i - 1] - 1);
+	}
+
+	public static char findMissingLetter2(char[] array) {
+		char expectableLetter = array[0];
+		for (char letter : array) {
+			if (letter != expectableLetter)
+				break;
+			expectableLetter++;
+		}
+		return expectableLetter;
+	}
+
 //	Given an array of integers, find the one that appears an odd number of times.
 //
 //	There will always be only one integer that appears an odd number of times.
@@ -234,17 +232,57 @@ public class JavaChallenges {
 //	[1,1,2] should return 2, because it occurs 1 time (which is odd).
 //	[0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
 //	[1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
-	
+
 	public static int findIt(int[] A) {
-	  	int xor = 0;
-	    for (int i = 0; i < A.length; i++) {
-	    	xor ^= A[i];
-	    }
-	    return xor;
-	  }
-	
+		int xor = 0;
+		for (int i = 0; i < A.length; i++) {
+			xor ^= A[i];
+		}
+		return xor;
+	}
+
 	public static int findIt2(int[] arr) {
 		return Arrays.stream(arr).reduce(0, (x, y) -> x ^ y);
+	}
+
+//	You are given an array (which will have a length of at least 3, but could be very large) containing integers. 
+//	The array is either entirely comprised of odd integers or entirely comprised of even integers except 
+//	for a single integer N. Write a method that takes the array as an argument and returns this "outlier" N.
+//
+//	Examples
+//	[2, 4, 0, 100, 4, 11, 2602, 36] -->  11 (the only odd number)
+//
+//	[160, 3, 1719, 19, 11, 13, -21] --> 160 (the only even number)
+
+	public static int findOutlier(int[] array) {
+
+		int sum = (Arrays.stream(array).limit(3).map(i -> Math.abs(i) % 2).sum());
+		int mod = (sum == 0 || sum == 1) ? 1 : 0;
+		return Arrays.stream(array).parallel().filter(n -> Math.abs(n) % 2 == mod).findFirst().getAsInt();
+	}
+	
+	public static int findOutlier2(int[] array) {
+
+		int evenCount = 0;
+		int oddCount = 0;
+		for (int i = 0; i < 3; i++) {
+			if (array[i] % 2 == 0) {
+				evenCount++;
+			} else {
+				oddCount++;
+			}
+		}
+
+		boolean isOutlierEven = evenCount > oddCount;
+		for (int num : array) {
+			if (isOutlierEven && num % 2 != 0) {
+				return num;
+			} else if (!isOutlierEven && num % 2 == 0) {
+				return num;
+			}
+		}
+
+		throw new IllegalArgumentException("No outlier found.");
 	}
 
 }
