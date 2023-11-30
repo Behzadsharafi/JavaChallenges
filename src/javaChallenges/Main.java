@@ -1,40 +1,27 @@
 package javaChallenges;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
 
-	public static String longestConsec(String[] strarr, int k) {
-		   int n = strarr.length;
-
-	        // Check for valid input
-	        if (n == 0 || k > n || k <= 0) {
-	            return "";
-	        }
-
-	        String longestString = "";
-
-	        for (int i = 0; i <= n - k; i++) {
-	            StringBuilder currentString = new StringBuilder();
-	            for (int j = i; j < i + k; j++) {
-	                currentString.append(strarr[j]);
-	            }
-
-	            if (currentString.length() > longestString.length()) {
-	                longestString = currentString.toString();
-	            }
-	        }
-
-	        return longestString;
+	public static int countSmileys(List<String> arr) {
+		return (int) arr.stream().filter(x -> x.matches("[:;][-~]?[)D]")).count();
 	}
 
 	public static void main(String[] args) {
-		// Example
-		String[] example1 = { "tree", "foling", "trashy", "blue", "abcdef", "uvwxyz" };
-		System.out.println(longestConsec(example1, 0));
+		List<String> a = new ArrayList<String>();
+		a.add(":)");
+		a.add(":D");
+		a.add(":-}");
+		a.add(":-()");
+
+		System.out.println(countSmileys(a));
 	}
-
 }
-
-//return Arrays.stream(strarr).skip(1).limit(2).collect(Collectors.joining());

@@ -1,7 +1,9 @@
 package javaChallenges;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -261,7 +263,7 @@ public class JavaChallenges {
 		int mod = (sum == 0 || sum == 1) ? 1 : 0;
 		return Arrays.stream(array).parallel().filter(n -> Math.abs(n) % 2 == mod).findFirst().getAsInt();
 	}
-	
+
 	public static int findOutlier2(int[] array) {
 
 		int evenCount = 0;
@@ -285,8 +287,7 @@ public class JavaChallenges {
 
 		throw new IllegalArgumentException("No outlier found.");
 	}
-	
-	
+
 //	You are given an array(list) strarr of strings and an integer k. Your task is to return the first longest string consisting of k consecutive strings taken in the array.
 //
 //	Examples:
@@ -310,33 +311,244 @@ public class JavaChallenges {
 //
 //	Note
 //	consecutive strings : follow one after another without an interruption
-	
-	  public static String longestConsec(String[] strarr, int k) {
-	        if (strarr.length == 0 || k > strarr.length || k <= 0)
-	            return "";
 
-	        String longestStr = "";
-	        for (int index = 0; index < strarr.length - k + 1; index++) {
-	            StringBuilder sb = new StringBuilder();
-	            for (int i = index; i < index + k; i++) {
-	                sb.append(strarr[i]);
-	            }
-	            if (sb.toString().length() > longestStr.length()) {
-	                longestStr = sb.toString();
-	            }
-	        }
-	        return longestStr;
-	    }
-	  
-	  public static String longestConsec2(String[] strarr, int k) {
-	        if (k <= 0) {
-	            return "";
-	        }
+	public static String longestConsec(String[] strarr, int k) {
+		if (strarr.length == 0 || k > strarr.length || k <= 0)
+			return "";
 
-	        return IntStream.rangeClosed(0, strarr.length - k)
-	                .mapToObj(i -> Arrays.stream(strarr, i, i + k).collect(Collectors.joining()))
-	                .max(Comparator.comparingInt(String::length))
-	                .orElse("");
-	    }
+		String longestStr = "";
+		for (int index = 0; index < strarr.length - k + 1; index++) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = index; i < index + k; i++) {
+				sb.append(strarr[i]);
+			}
+			if (sb.toString().length() > longestStr.length()) {
+				longestStr = sb.toString();
+			}
+		}
+		return longestStr;
+	}
+
+	public static String longestConsec2(String[] strarr, int k) {
+		if (k <= 0) {
+			return "";
+		}
+
+		return IntStream.rangeClosed(0, strarr.length - k)
+				.mapToObj(i -> Arrays.stream(strarr, i, i + k).collect(Collectors.joining()))
+				.max(Comparator.comparingInt(String::length)).orElse("");
+	}
+
+//	  Description
+//	  We need a function that can transform a string 
+//	  into a number. What ways of achieving this do you know?
+//
+//	  Note: Don't worry, all inputs will be strings, and every 
+//	  string is a perfectly valid representation of an integral number.
+//
+//	  Examples
+//	  "1234" --> 1234
+//	  "605"  --> 605
+//	  "1405" --> 1405
+//	  "-7" --> -7
+
+	public static int stringToNumber(String str) {
+		return Integer.parseInt(str);
+	}
+
+	public static int stringToNumber2(String str) {
+		return Integer.valueOf(str);
+	}
+
+//	Consider an array/list of sheep where some sheep may be missing from their place.
+//	We need a function that counts the number of sheep present in the array (true means present).
+//
+//	For example,
+//
+//	[true,  true,  true,  false,
+//	  true,  true,  true,  true ,
+//	  true,  false, true,  false,
+//	  true,  false, false, true ,
+//	  true,  true,  true,  true ,
+//	  false, false, true,  true]
+//	The correct answer would be 17.
+//
+//	Hint: Don't forget to check for bad values like null/undefined
+
+	public int countSheeps(Boolean[] arrayOfSheeps) {
+		int counter = 0;
+		for (Boolean present : arrayOfSheeps) {
+			if (present != null && present) {
+				counter += 1;
+			}
+		}
+		return counter;
+	}
+
+	public int countSheeps2(Boolean[] arrayOfSheeps) {
+		return Collections.frequency(Arrays.asList(arrayOfSheeps), true);
+	}
+
+	public int countSheeps3(Boolean[] arrayOfSheeps) {
+		// TODO May the force be with you
+		return Arrays.stream(arrayOfSheeps).filter(x -> x != null).filter(x -> x == true).toArray().length;
+	}
+
+//	Your task is to make a function that can take any non-negative integer as an argument and return 
+//	it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
+//
+//	Examples:
+//	Input: 42145 Output: 54421
+//
+//	Input: 145263 Output: 654321
+//
+//	Input: 123456789 Output: 987654321
+
+	public static int sortDesc(final int num) {
+		String[] array = String.valueOf(num).split("");
+		Arrays.sort(array, Collections.reverseOrder());
+		return Integer.valueOf(String.join("", array));
+	}
+
+//	A Narcissistic Number (or Armstrong Number) is a positive number which is the sum of its
+//	own digits, each raised to the power of the number of digits in a given base. In this Kata,
+//	we will restrict ourselves to decimal (base 10).
+//
+//	For example, take 153 (3 digits), which is narcissistic:
+//
+//	    1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153
+//	and 1652 (4 digits), which isn't:
+//
+//	    1^4 + 6^4 + 5^4 + 2^4 = 1 + 1296 + 625 + 16 = 1938
+//	The Challenge:
+//
+//	Your code must return true or false (not 'true' and 'false') depending upon whether
+//			the given number is a Narcissistic number in base 10.
+//
+//	This may be True and False in your language, e.g. PHP.
+//
+//	Error checking for text strings or other invalid inputs is not required, only valid
+//	positive non-zero integers will be passed into the function.
+
+	public static boolean isNarcissistic(int number) {
+		String strNumber = String.valueOf(number);
+		char[] digits = strNumber.toCharArray();
+		int sum = 0;
+		for (char digit : digits)
+			sum += Math.pow(Integer.parseInt(String.valueOf(digit)), digits.length);
+		return sum == number ? true : false;
+	}
+
+	public static boolean isNarcissistic2(int number) {
+		int length = String.valueOf(number).length();
+		return number == Arrays.stream(String.valueOf(number).split("")).mapToInt(Integer::parseInt)
+				.mapToDouble(m -> Math.pow(m, length)).sum();
+	}
+
+//	Task
+//	Given an integral number, determine if it's a square number:
+
+//	Examples
+//	-1  =>  false
+//	 0  =>  true
+//	 3  =>  false
+//	 4  =>  true
+//	25  =>  true
+//	26  =>  false
+
+	public static boolean isSquare(int n) {
+		return Math.sqrt(n) % 1 == 0;
+	}
+
+	public static boolean isSquare2(int n) {
+		long s = Math.round(Math.sqrt(n));
+		return s * s == n;
+	}
+
+//	Given a string of words, you need to find the highest scoring word.
+//
+//	Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+//
+//	For example, the score of abad is 8 (1 + 2 + 1 + 4).
+//
+//	You need to return the highest scoring word as a string.
+//
+//	If two words score the same, return the word that appears earliest in the original string.
+//
+//	All letters will be lowercase and all inputs will be valid.
+
+	public static String high(String s) {
+		String winner = "";
+		int highScore = 0;
+
+		for (String word : s.split(" ")) {
+			int score = 0;
+			for (char c : word.toCharArray()) {
+				score += c - 'a' + 1;
+			}
+			if (score > highScore) {
+				winner = word;
+				highScore = score;
+			}
+		}
+
+		return winner;
+	}
+
+	public static String high2(String s) {
+		return Arrays.stream(s.split(" ")).max(Comparator.comparingInt(a -> a.chars().map(i -> i - 96).sum())).get();
+	}
+
+//	Welcome. In this kata, you are asked to square
+//	every digit of a number and concatenate them.
+//
+//	For example, if we run 9119 through the function,
+//	811181 will come out, because 92 is 81 and 12 is 1. (81-1-1-81)
+//
+//	Example #2: An input of 765 will/should return 
+//	493625 because 72 is 49, 62 is 36, and 52 is 25. (49-36-25)
+//
+//	Note: The function accepts an integer and returns an integer.
+
+	public static int squareDigits(int n) {
+		return Integer.parseInt(String.valueOf(n).chars().map(Character::getNumericValue).map(i -> i * i)
+				.mapToObj(String::valueOf).collect(Collectors.joining("")));
+	}
+
+	public static int squareDigits2(int n) {
+
+		String result = "";
+		for (char c : String.valueOf(n).toCharArray()) {
+			result += (int) Math.pow(Character.getNumericValue(c), 2);
+//			result += (int) Math.pow(Character.digit(c, 10), 2); This is the same
+
+		}
+		return Integer.parseInt(result);
+	}
+
+//	Given an array (arr) as an argument complete the function countSmileys
+//	that should return the total number of smiling faces.
+//
+//	Rules for a smiling face:
+//
+//	Each smiley face must contain a valid pair of eyes. Eyes can be marked as : or ;
+//	A smiley face can have a nose but it does not have to. Valid characters for a nose are - or ~
+//	Every smiling face must have a smiling mouth that should be marked with either ) or D
+//	No additional characters are allowed except for those mentioned.
+//
+//	Valid smiley face examples: :) :D ;-D :~)
+//	Invalid smiley faces: ;( :> :} :]
+//
+//	Example
+//	countSmileys([':)', ';(', ';}', ':-D']);       // should return 2;
+//	countSmileys([';D', ':-(', ':-)', ';~)']);     // should return 3;
+//	countSmileys([';]', ':[', ';*', ':$', ';-D']); // should return 1;
+//	Note
+//	In case of an empty array return 0. You will not be tested with invalid input
+//	(input will always be an array). Order of the face (eyes, nose, mouth) elements will always be the same.
+
+	public static int countSmileys(List<String> arr) {
+		return (int) arr.stream().filter(x -> x.matches("[:;][-~]?[)D]")).count();
+	}
 
 }
