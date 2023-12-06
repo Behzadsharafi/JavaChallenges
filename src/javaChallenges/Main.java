@@ -1,78 +1,42 @@
 package javaChallenges;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Main {
 
-	public static int parseInt(String numStr) {
-        String[] numArray = numStr.split("[ |-]");
-        int number = 0;
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("zero", 0);
-        map.put("one", 1);
-        map.put("two", 2);
-        map.put("three", 3);
-        map.put("four", 4);
-        map.put("five", 5);
-        map.put("six", 6);
-        map.put("seven", 7);
-        map.put("eight", 8);
-        map.put("nine", 9);
-        map.put("ten", 10);
-        map.put("eleven", 11);
-        map.put("twelve", 12);
-        map.put("thirteen", 13);
-        map.put("fourteen", 14);
-        map.put("fifteen", 15);
-        map.put("sixteen", 16);
-        map.put("seventeen", 17);
-        map.put("eighteen", 18);
-        map.put("nineteen", 19);
-        map.put("twenty", 20);
-        map.put("thirty", 30);
-        map.put("forty", 40);
-        map.put("fifty", 50);
-        map.put("sixty", 60);
-        map.put("seventy", 70);
-        map.put("eighty", 80);
-        map.put("ninety", 90);
-        map.put("hundred", 100);
-        map.put("thousand", 1000);
-        map.put("million", 1000000);
-        
-        for (int i = 0; i < numArray.length; i++) {
-            for (String key : map.keySet()) {
-                if (numArray[i].toLowerCase().equals(key)) {
-                    if (map.get(key) == 100) {
-                        int temp = number % 100;
-                        number -= temp;
-                        number += temp * (map.get(key));
-                    }
-                    else if (map.get(key) > 100)
-                        number *= (map.get(key));
-                    else
-                        number += map.get(key);
-                      break;
-                }
-            }
-        }
-        return number;
-    }
-
-	public static void main(String[] args) {
 	
 
-		System.out.println(parseInt("seven hundred eighty-three thousand nine hundred and nineteen"));
-	}
+	  public static int greedy(int[] dice) {
+		  int n[]= new int[7];
+		  for (int d:dice) n[d]++;
+		  return n[1]/3*1000 + n[6]/3*600+ n[5]/3*500+ n[4]/3*400+n[3]/3*300+ n[2]/3*200+ n[1]%3*100+n[5]%3*50;
+
+		  }
+
+	    public static void main(String[] args) {
+//	        int n[] = new int[7];
+
+	        // Assign values to individual elements
+//	        n[0] = 10;
+//	        n[1] = 20;
+//	        n[2] = 30;
+//	        n[3] = 40;
+//	        n[4] = 50;
+//	        n[5] = 60;
+//	        n[6] = 70;
+
+	        // Print the entire array using Arrays.toString()
+
+	        int[] throw1 = {5, 1, 3, 4, 1};
+	        int[] throw2 = {1, 1, 1, 3, 1};
+	        int[] throw3 = {2, 4, 4, 5, 4};
+
+	        System.out.println("Throw 1 Score: " + greedy(throw1)); // Should return 250
+	        System.out.println("Throw 2 Score: " + greedy(throw2)); // Should return 1100
+	        System.out.println("Throw 3 Score: " + greedy(throw3)); // Should return 450
+	    	
+	    }
 }
 
 //int number = 0;
